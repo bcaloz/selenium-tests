@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug: test_google",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "cwd": "${workspaceFolder}",
+      "args": ["tests/test_google.py","-v"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Debug: test_demo",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "cwd": "${workspaceFolder}",
+      "args": ["tests/test_demo.py","-v", "-s"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Debug: all tests",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "cwd": "${workspaceFolder}",
+      "args": ["tests","-v"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    }
+  ]
+}
