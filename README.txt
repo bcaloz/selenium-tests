@@ -19,3 +19,4 @@ venv\Scripts\activate.bat           # use this to activate it in CMD on Windows
 source venv/bin/activate            # use this to activate in Git Bash/WSL/Linux/Mac
 pip install -r requirements.txt     # to recreate environment
 pytest tests/
+```
