@@ -74,7 +74,6 @@ def validate_placeholder_field_text_input(driver, locator_type, locator_value, p
 
     # Validate label text
     _assert_equal(label_elem.text.strip(), label_expected_text, f"Label text mismatch for '{locator_value}'")
-
     
     # Validate placeholder text
     _assert_equal(input_elem.get_attribute("placeholder"), placeholder_text, f"Placeholder text mismatch for '{locator_value}'")
