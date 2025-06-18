@@ -17,7 +17,7 @@ def test_landing_page(driver):
 
     assert "Demo Page" in driver.page_source
 
-def test_validate_text_fields(driver):
+def test_validate_form_fields(driver):
     driver.get("https://seleniumbase.io/demo_page")
 
     form_helpers.validate_text_input(
@@ -73,37 +73,10 @@ def test_validate_text_fields(driver):
         selected_option="Link Two"
     )
 
-
-# presence_of_element_located
-# visibility_of_element_located
-#- `By.ID`
-#- `By.XPATH`
-#- `By.CSS_SELECTOR`
-#- `By.CLASS_NAME`
-# WebDriverWait
-# expected_conditions
-
-
-
-
-
-    # WebDriverWait(driver, 10).until(
-    #     EC.visibility_of_element_located((By.ID, "myTextInput"))
-    # )
-
-    # # 1. Wait for the input field
-    # txtInputFld = WebDriverWait(driver, 10).until(
-    #     EC.presence_of_element_located((By.ID, "myTextInput"))
-    # )
-
-    # # 2. Find the <td> that contains the label text (the preceding sibling)
-    # label_txtInputFld = txtInputFld.find_element(By.XPATH, "./parent::td/preceding-sibling::td")
-
-    # # 3. Validate label text
-    # assert label_txtInputFld.text.strip() == "Text Input Field:", "Label text does not match"
-
-    # # 4. Type into input
-    # txtInputFld.send_keys("Learn Selenium")
-
-    # # 5. Validate text I just wrote
-    # assert txtInputFld.get_attribute("value") == "Learn Selenium"
+    form_helpers.validate_button(
+        driver,
+        locator_type=By.ID,
+        locator_value="myButton",
+        button_text="Click Me (Green)",
+        label_expected_text="Button:"
+    )

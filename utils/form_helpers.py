@@ -144,7 +144,7 @@ def validate_dropdown(driver, menu_locator_type, menu_locator_value, contents_lo
     dropdown_menu_text = dropdown_menu_elem.text.strip()
 
     # Hover over dropdown to trigger the dropdown menu
-    ActionChains(driver).move_to_element(dropdown_menu_elem).perform()
+    ActionChains(driver).move_to_element(dropdown_menu_elem).pause(0.5).perform()
 
     # Wait for dropdown items to be visible
     WebDriverWait(driver, timeout).until(
@@ -173,3 +173,56 @@ def validate_dropdown(driver, menu_locator_type, menu_locator_value, contents_lo
     )
     header_elem = driver.find_element(By.TAG_NAME, "h3")
     _assert_equal(header_elem.text.strip(), "Automation Practice", f"Header text mismatch after clicking dropdown menu '{dropdown_menu_text}'")
+
+def validate_color_elements(driver, color, timeout=10):
+    # Elements to check
+    elements = [
+        ("myButton", f"Click Me ({color})", "text"),
+        ("readOnlyText", f"The Color is {color}", "value"),
+        ("pText", f"This Text is {color}", "text"),
+    ]
+
+    for elem_locator, elem_expected_text, method in elements:
+        elem = WebDriverWait(driver, timeout).until(
+             EC.visibility_of_element_located((By.ID, elem_locator))
+         )
+        
+        # Get actual text from correct source
+        if method == "text":
+            elem_actual_text = elem.text.strip()
+        elif method == "value":
+            elem_actual_text = elem.get_attribute("value").strip()
+        else:
+            raise ValueError(f"Unknown method '{method}' for element {elem_locator}")
+        _assert_equal(elem_actual_text, elem_expected_text)
+
+        elem_actual_style = elem.get_attribute("style").lower().replace(" ", "").rstrip(";")
+        elem_expected_style = f"color:{color.lower()}"
+        assert elem_expected_style in elem_actual_style, f"Style mismatch: expected '{elem_expected_style}' in '{elem_actual_style}'"
+
+def validate_button(driver, locator_type, locator_value, button_text, label_expected_text, timeout=10):
+    # Wait for and locate button
+    button_elem = WebDriverWait(driver, timeout).until(
+        EC.visibility_of_element_located((locator_type, locator_value))
+    )
+
+    # Validate button text
+    button_actual_text = button_elem.text.strip()
+    _assert_equal(button_actual_text, button_text, f"Button text mismatch for '{locator_value}'")
+    
+    # Validate button label text
+    label_elem = button_elem.find_element(
+        By.XPATH, f"./ancestor::tr/td[contains(text(), '{label_expected_text}')]"
+    )
+    label_actual_text = label_elem.text.strip()
+    _assert_equal(label_actual_text, label_expected_text, f"Label text mismatch for '{locator_value}'")
+
+    # Click the button and validate that the colors and text change to purple
+    print(f"[button] Clicking on '{locator_value}'")
+    button_elem.click()
+    validate_color_elements(driver, "Purple")
+
+    # Click the button again and validate that the colors and text change back to green
+    print(f"[button] Clicking on '{locator_value}'")
+    button_elem.click()
+    validate_color_elements(driver, "Green")
