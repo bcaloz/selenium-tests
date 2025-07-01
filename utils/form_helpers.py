@@ -104,12 +104,12 @@ def validate_textarea_input(driver, locator_type, locator_value, label_expected_
     print(f"[textarea_input] Typing into '{locator_value}':\n" + "\n".join(values_to_type))
     textarea_elem.send_keys("\n".join(values_to_type))
     # Ensure that the textarea contains new lines
-    _assert_equal(True, "\n" in textarea_elem.get_attribute("value"), "Textarea is missing newline")
+    _assert_equal(True, "\n" in textarea_elem.get_attribute("value"), "Textarea is missing newline") # type: ignore[attr-defined]
 
     # Validate value was entered
     _assert_equal("\n".join(values_to_type), textarea_elem.get_attribute("value"), "Value not properly set")
 
-def validate_SVG(driver, locator_type, locator_value, label_expected_text, stroke_color, fill_color, timeout=10):
+def validate_SVG(driver, locator_type, locator_value, label_expected_text, stroke_color, fill_color, timeout=10) -> None:
     # Wait for and locate SVG element
     svg_rect = WebDriverWait(driver, timeout).until(
         EC.visibility_of_element_located((locator_type, locator_value))
@@ -122,7 +122,9 @@ def validate_SVG(driver, locator_type, locator_value, label_expected_text, strok
 
     # Does it have the expected style?
     _assert_equal(svg_rect.get_attribute("stroke"), stroke_color, f"Unexpected stroke color for '{locator_value}'")
-    _assert_equal(svg_rect.get_attribute("fill").lower(), fill_color.lower(), f"Unexpected fill color for '{locator_value}'")
+    fill_attribute = svg_rect.get_attribute("fill")
+    assert fill_attribute is not None, f"'fill' attribute missing on {locator_value}"
+    _assert_equal(fill_attribute.lower(), fill_color.lower(), f"Unexpected fill color for '{locator_value}'")
 
     # Click it to re-trigger the animation
     svg_rect.click()
@@ -173,7 +175,7 @@ def validate_dropdown(driver, menu_locator_type, menu_locator_value, contents_lo
     header_elem = driver.find_element(By.TAG_NAME, "h3")
     _assert_equal(header_elem.text.strip(), "Automation Practice", f"Header text mismatch after clicking dropdown menu '{dropdown_menu_text}'")
 
-def validate_color_elements(driver, color, timeout=10):
+def validate_color_elements(driver, color, timeout=10) -> None:
     # Elements to check
     elements = [
         ("myButton", f"Click Me ({color})", "text"),
@@ -190,12 +192,16 @@ def validate_color_elements(driver, color, timeout=10):
         if method == "text":
             elem_actual_text = elem.text.strip()
         elif method == "value":
-            elem_actual_text = elem.get_attribute("value").strip()
+            value_attribute = elem.get_attribute("value")
+            assert value_attribute is not None, f"'value' attribute missing on {elem_locator}"
+            elem_actual_text = value_attribute.strip()
         else:
             raise ValueError(f"Unknown method '{method}' for element {elem_locator}")
         _assert_equal(elem_actual_text, elem_expected_text)
 
-        elem_actual_style = elem.get_attribute("style").lower().replace(" ", "").rstrip(";")
+        style_attribute = elem.get_attribute("style")
+        assert style_attribute is not None, f"'style' attribute missing on {elem_locator}"
+        elem_actual_style = style_attribute.lower().replace(" ", "").rstrip(";")
         elem_expected_style = f"color:{color.lower()}"
         assert elem_expected_style in elem_actual_style, f"Style mismatch: expected '{elem_expected_style}' in '{elem_actual_style}'"
 
