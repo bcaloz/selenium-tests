@@ -1,6 +1,7 @@
 {
   "version": "0.2.0",
   "configurations": [
+    // --- procedural tests ---
     {
       "name": "Debug: test_google",
       "type": "debugpy",
@@ -28,6 +29,28 @@
       "module": "pytest",
       "cwd": "${workspaceFolder}",
       "args": ["tests","-v"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+
+     // --- POM tests ---
+    {
+      "name": "Debug: landing_page only",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "cwd": "${workspaceFolder}",
+      "args": ["pom_demo/tests/test_landing_page.py", "-v", "-s"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Debug: all POM tests",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "cwd": "${workspaceFolder}",
+      "args": ["pom_demo/tests", "-v"],
       "console": "integratedTerminal",
       "justMyCode": false
     }
