@@ -1,7 +1,7 @@
 {
   "version": "0.2.0",
   "configurations": [
-    // --- procedural tests ---
+    // --- Procedural tests ---
     {
       "name": "Debug: test_google",
       "type": "debugpy",
@@ -33,7 +33,7 @@
       "justMyCode": false
     },
 
-     // --- POM tests ---
+     // --- Legacy POM tests ---
     {
       "name": "Debug: landing_page only",
       "type": "debugpy",
@@ -45,7 +45,7 @@
       "justMyCode": false
     },
     {
-      "name": "Debug: all POM tests",
+      "name": "Debug: all pom_demo tests",
       "type": "debugpy",
       "request": "launch",
       "module": "pytest",
@@ -53,6 +53,28 @@
       "args": ["pom_demo/tests", "-v"],
       "console": "integratedTerminal",
       "justMyCode": false
-    }
+    },
+
+    // --- Expanded POM tests ---
+    {
+      "name": "Debug: form_validation_page only",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "cwd": "${workspaceFolder}",
+      "args": ["expand_pom_demo/tests/test_form_validation.py", "-v", "-s"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Debug: all expand_pom_demo tests",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "cwd": "${workspaceFolder}",
+      "args": ["expand_pom_demo/tests", "-v"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
   ]
 }
