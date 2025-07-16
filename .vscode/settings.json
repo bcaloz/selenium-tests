@@ -1,0 +1,7 @@
+{
+    "python.testing.pytestArgs": [
+        "expand_pom_demo"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}
