@@ -19,7 +19,7 @@ def test_page_title_is_correct(driver: WebDriver) -> None:
 @pytest.mark.form_validation
 @pytest.mark.smoke
 def test_valid_form_submission_redirects(driver: WebDriver) -> None:
-    """Happy path - complete form, click Register, and validate user is redirected to form confirmation page with PosAck msg"""
+    """Happy path - complete form, click Register, and validate user is redirected to form confirmation page with positive acknowledgment message."""
     page = FormValidationPage(driver)
     page.open()
 
@@ -43,7 +43,7 @@ def test_valid_form_submission_redirects(driver: WebDriver) -> None:
 
 @pytest.mark.form_validation
 def test_blank_form_submission_shows_errors(driver: WebDriver) -> None:
-    """Click Register with all fields blank and validate error messages for each"""
+    """Click Register with all fields blank and validate error messages for each."""
     page = FormValidationPage(driver)
     page.open()
 
