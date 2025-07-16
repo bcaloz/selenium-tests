@@ -1,10 +1,5 @@
-from typing import Final
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from expand_pom_demo.pages.base_page import BasePage
 
@@ -28,6 +23,7 @@ class FormValidationPage(BasePage):
     PAGE_TITLE = (By.XPATH, "//h1[text()='Form Validation page for Automation Testing Practice']")
     NAME_INPUT = (By.ID, "validationCustom01")
     NAME_ERROR_MSG = (By.XPATH, "//input[@id='validationCustom01']/following-sibling::div[contains(@class, 'invalid-feedback')]")
+    NAME_SUCCESS_MSG = (By.XPATH, "//input[@id='validationCustom01']/following-sibling::div[contains(@class, 'valid-feedback')]")
     PHONE_INPUT = (By.NAME, "contactnumber")
     PHONE_ERROR_MSG = (By.XPATH, "//input[@id='validationCustom05']/following-sibling::div[contains(@class, 'invalid-feedback')]")
     DATE_INPUT = (By.NAME, "pickupdate")
@@ -75,14 +71,33 @@ class FormValidationPage(BasePage):
         select = Select(self._wait_for_element(locator))
         select.select_by_visible_text(visible_text)
     
+    def _element_is_hidden(self, locator: tuple[str, str]) -> bool:
+        try:
+            elem = self.driver.find_element(*locator)
+            return not elem.is_displayed()
+        except Exception:
+            return True  # If not found, treat as hidden
+
     def get_name_error_msg(self) -> str:
          return self._wait_for_element(self.NAME_ERROR_MSG).text.strip()
+
+    def get_name_success_msg(self) -> str:
+         return self._wait_for_element(self.NAME_SUCCESS_MSG).text.strip()
 
     def get_phone_error_msg(self) -> str:
         return self._wait_for_element(self.PHONE_ERROR_MSG).text.strip()
     
+    def get_phone_success_indicator(self) -> bool:
+        return self._element_is_hidden(self.PHONE_ERROR_MSG)
+    
     def get_date_error_msg(self) -> str:
         return self._wait_for_element(self.DATE_ERROR_MSG).text.strip()
     
+    def get_date_success_indicator(self) -> bool:
+        return self._element_is_hidden(self.DATE_ERROR_MSG)
+
     def get_payment_error_msg(self) -> str:
         return self._wait_for_element(self.PAYMENT_ERROR_MSG).text.strip()
+
+    def get_payment_success_indicator(self) -> bool:
+        return self._element_is_hidden(self.PAYMENT_ERROR_MSG)

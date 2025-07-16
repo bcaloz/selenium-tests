@@ -25,7 +25,7 @@ class BasePage:
         return self.wait.until(EC.visibility_of_element_located(locator))
 
     @staticmethod
-    def assert_equal(expected: str, actual: str, message_prefix: str = "") -> None:
+    def assert_equal(expected: object, actual: object, message_prefix: str = "") -> None:
         assert expected == actual, f"{message_prefix}Expected: '{expected}', Actual: '{actual}'"
 
     @staticmethod

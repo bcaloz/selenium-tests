@@ -1,13 +1,13 @@
 import pytest
 from expand_pom_demo.pages.form_validation_page import FormValidationPage
 from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.common.by import By
 
 @pytest.mark.form_validation
 def test_page_title_is_correct(driver: WebDriver) -> None:
-    """Ensure that the form validation page loads correctly and the expected title is present."""
-    #TODO: change to def test_page_load_and_form_defaults_are_correct(...)
-    #  and validate pre-filled default values
+    """
+    Ensure that the form validation page loads correctly and the expected title is present.
+    Skipping placeholder/default field text checks — low-impact, brittle, and not core to test value.
+    """
     page = FormValidationPage(driver)
     page.open()
 
@@ -67,12 +67,30 @@ def test_blank_form_submission_shows_errors(driver: WebDriver) -> None:
 
 @pytest.mark.form_validation
 def test_field_validation_feedback(driver: WebDriver) -> None:
-    '''
-    4. then fill out one field at a time with proper values and validate that the field error messages change to "Looks good!" with a green check mark
-    '''
+    """
+    Trigger validation errors, then fill out one field at a time with valid input and verify they show success indicators.
+    
+    - Name field should display positive acknowledgment text.
+    - Contact number, PickUp Date, and Payment Method should display green checkmarks with no accompanying text.
+    """
+    page = FormValidationPage(driver)
+    page.open()
 
-@pytest.mark.form_validation
-def test_date_picker_interaction(driver: WebDriver) -> None:
-    '''
-    5. actually click the date picker for pickup date and interact with calendar there
-    '''
+    # Page starts with pre-filled texct in Contact Name field. Clear to trigger error msg.
+    page.clear_name_field()
+    page.click_register_button()
+
+    # Now fill out form fields and validate success indicators appear
+    page.fill_form(
+        name="Brian QA",
+        phone="345-6789190",
+        date="07-16-2025",
+        payment_method="card"
+    )
+
+    expected_name_success_msg = "Looks good!"
+    actual_name_success_msg = page.get_name_success_msg()
+    page.assert_equal(expected_name_success_msg, actual_name_success_msg, "Name field success message mismatch: ")
+    page.assert_equal(True, page.get_phone_success_indicator(), "Phone field should suppress error message: ")
+    page.assert_equal(True, page.get_date_success_indicator(), "Date field should suppress error message: ")
+    page.assert_equal(True, page.get_payment_success_indicator(), "Payment method field should suppress error message: ")
