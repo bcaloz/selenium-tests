@@ -17,8 +17,6 @@ class FormValidationPage(BasePage):
 
     This class provides methods for interacting with and validating each of these elements.
     """
-
-    # Locators
     URL = "https://practice.expandtesting.com/form-validation"
     PAGE_TITLE = (By.XPATH, "//h1[text()='Form Validation page for Automation Testing Practice']")
     NAME_INPUT = (By.ID, "validationCustom01")
@@ -33,7 +31,6 @@ class FormValidationPage(BasePage):
     REGISTER_BUTTON = (By.CSS_SELECTOR, "button.btn.btn-primary")
     CONFIRM_MSG = (By.CSS_SELECTOR, "div.alert.alert-info > p")
 
-    # Functions
     def open(self) -> None:
         print("[FormValidationPage] Opening page")
         self.driver.get(self.URL)
