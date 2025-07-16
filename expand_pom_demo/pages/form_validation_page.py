@@ -58,26 +58,6 @@ class FormValidationPage(BasePage):
         elem = self._wait_for_element(self.NAME_INPUT)
         elem.clear()
 
-    def _wait_for_element(self, locator: tuple[str, str]) -> WebElement:
-        return self.wait.until(EC.visibility_of_element_located(locator))
-    
-    def _input_text(self, locator: tuple[str, str], text: str) -> None:
-        elem = self._wait_for_element(locator)
-        elem.clear()
-        elem.send_keys(text)
-
-    def _select_dropdown(self, locator: tuple[str, str], visible_text: str) -> None:
-        from selenium.webdriver.support.ui import Select
-        select = Select(self._wait_for_element(locator))
-        select.select_by_visible_text(visible_text)
-    
-    def _element_is_hidden(self, locator: tuple[str, str]) -> bool:
-        try:
-            elem = self.driver.find_element(*locator)
-            return not elem.is_displayed()
-        except Exception:
-            return True  # If not found, treat as hidden
-
     def get_name_error_msg(self) -> str:
          return self._wait_for_element(self.NAME_ERROR_MSG).text.strip()
 
@@ -101,3 +81,23 @@ class FormValidationPage(BasePage):
 
     def get_payment_success_indicator(self) -> bool:
         return self._element_is_hidden(self.PAYMENT_ERROR_MSG)
+
+    def _wait_for_element(self, locator: tuple[str, str]) -> WebElement:
+        return self.wait.until(EC.visibility_of_element_located(locator))
+    
+    def _input_text(self, locator: tuple[str, str], text: str) -> None:
+        elem = self._wait_for_element(locator)
+        elem.clear()
+        elem.send_keys(text)
+
+    def _select_dropdown(self, locator: tuple[str, str], visible_text: str) -> None:
+        from selenium.webdriver.support.ui import Select
+        select = Select(self._wait_for_element(locator))
+        select.select_by_visible_text(visible_text)
+    
+    def _element_is_hidden(self, locator: tuple[str, str]) -> bool:
+        try:
+            elem = self.driver.find_element(*locator)
+            return not elem.is_displayed()
+        except Exception:
+            return True  # If not found, treat as hidden
