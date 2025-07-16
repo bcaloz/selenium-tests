@@ -15,7 +15,7 @@ class BasePage:
     All page objects should inherit from this class to maintain consistency
     and avoid code duplication across the framework.
     """
-    TIMEOUT: Final[int] = 10
+    TIMEOUT = 10
 
     def __init__(self, driver: WebDriver, timeout: int = TIMEOUT) -> None:
         self.driver = driver
