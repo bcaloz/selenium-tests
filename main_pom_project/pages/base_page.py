@@ -30,3 +30,7 @@ class BasePage:
     @staticmethod
     def assert_startswith(expected: str, actual: str, message_prefix: str = "") -> None:
         assert actual.startswith(expected), f"{message_prefix}Expected start: '{expected}', Actual: '{actual}'"
+
+    @staticmethod
+    def assert_in(expected: str, actual: str, message_prefix: str = "") -> None:
+        assert expected in actual, f"{message_prefix}Expected to find: '{expected}', in: '{actual}'" 

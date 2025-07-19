@@ -52,7 +52,7 @@ def test_blank_form_submission_shows_errors(driver: WebDriver) -> None:
     expected_date_error_msg = "Please provide valid Date."
     expected_payment_method_error_msg = "Please select the Paymeny Method."
 
-    # Page starts with pre-filled texct in Contact Name field. Clear to trigger error msg.
+    # Page starts with pre-filled text in Contact Name field. Clear to trigger error msg.
     page.clear_name_field()
     page.click_register_button()
     actual_name_error_msg = page.get_name_error_msg()
