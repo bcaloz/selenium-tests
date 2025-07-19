@@ -40,3 +40,30 @@ pytest pom_demo/tests/ -v
 ## TODO: Improvements
 * rename folder to expanded_pom
 * rename old to legacy or something else to clearly mark they are inferior and the expanded is my main one
+* see below and rename pom_demo and associated references to basic_pom_demo
+
+
+## Projects
+
+| Project Folder        | Description                               |
+|-----------------------|-------------------------------------------|
+| `procedural_tests/`   | First experiments with Selenium in Python |
+| `basic_pom_demo/`           | Basic Page Object Model practice          |
+| `expanded_pom_demo/`  | ✅ Main showcase with advanced POM style  |
+
+"This repository contains three progressive tiers of automation test examples, starting with an introductory POM demo and culminating in a polished, multi-page framework (expand_pom_demo) showcasing professional test design."
+
+Put in multiple READMEs
+
+/your-repo-root/
+│
+├── README.md                  ← 🧭 Top-level: overview of your entire repo
+│
+├── procedural_tests/
+│   └── README.md              ← 📝 Describes your early procedural tests
+│
+├── pom_demo/
+│   └── README.md              ← 📝 Describes your first POM-based tests
+│
+└── expanded_pom_demo/
+    └── README.md              ← ✅ Highlight your main showcase project
