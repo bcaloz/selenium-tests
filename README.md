@@ -36,3 +36,7 @@ pytest tests/ -v
 # Run POM-based tests
 pytest pom_demo/tests/ -v
 ```
+
+## TODO: Improvements
+* rename folder to expanded_pom
+* rename old to legacy or something else to clearly mark they are inferior and the expanded is my main one
