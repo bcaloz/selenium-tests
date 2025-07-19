@@ -1,6 +1,6 @@
 {
     "python.testing.pytestArgs": [
-        "expand_pom_demo"
+        "main_pom_project"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true

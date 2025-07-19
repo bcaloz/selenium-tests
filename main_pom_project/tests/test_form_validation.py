@@ -1,5 +1,5 @@
 import pytest
-from expand_pom_demo.pages.form_validation_page import FormValidationPage
+from main_pom_project.pages.form_validation_page import FormValidationPage
 from selenium.webdriver.remote.webdriver import WebDriver
 
 @pytest.mark.form_validation

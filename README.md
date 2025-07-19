@@ -49,7 +49,7 @@ pytest pom_demo/tests/ -v
 |-----------------------|-------------------------------------------|
 | `procedural_tests/`   | First experiments with Selenium in Python |
 | `basic_pom_demo/`           | Basic Page Object Model practice          |
-| `expanded_pom_demo/`  | ✅ Main showcase with advanced POM style  |
+| `main_pom_project/`  | ✅ Main showcase with advanced POM style  |
 
 "This repository contains three progressive tiers of automation test examples, starting with an introductory POM demo and culminating in a polished, multi-page framework (expand_pom_demo) showcasing professional test design."
 

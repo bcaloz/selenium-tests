@@ -1,6 +1,6 @@
 import pytest
 import os
-from expand_pom_demo.pages.file_upload_page import FileUploadPage
+from main_pom_project.pages.file_upload_page import FileUploadPage
 from selenium.webdriver.remote.webdriver import WebDriver
 
 @pytest.mark.file_upload

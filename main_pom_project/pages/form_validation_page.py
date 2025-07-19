@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
-from expand_pom_demo.pages.base_page import BasePage
+from main_pom_project.pages.base_page import BasePage
 
 class FormValidationPage(BasePage):
     """

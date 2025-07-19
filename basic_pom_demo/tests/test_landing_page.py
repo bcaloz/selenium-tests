@@ -1,4 +1,4 @@
-from pom_demo.pages.landing_page import LandingPage
+from basic_pom_demo.pages.landing_page import LandingPage
 
 
 def test_landing_page_renders(driver):
