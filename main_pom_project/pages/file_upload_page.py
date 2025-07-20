@@ -10,15 +10,19 @@ class FileUploadPage(BasePage):
     """
     Page Object Model for https://practice.expandtesting.com/upload
 
-    This page contains a file upload form used to test front-end file handling validation.
+    This page contains a file upload form used to test front-end file
+    handling validation.
+
     It includes:
     - A file input field with a 500KB size limit
     - An upload button
     - Filename display on valid selection
     - Upload success message
-    - Dismissable tooltip alert if no file selected (coverage excluded due to native browser tooltip limitation)
+    - Dismissable tooltip alert if no file selected (coverage excluded
+      due to native browser tooltip limitation)
 
-    This class provides methods for interacting with and validating each of these elements.
+    This class provides methods for interacting with and validating
+    each of these elements.
     """
 
     URL = "https://practice.expandtesting.com/upload"
@@ -54,7 +58,9 @@ class FileUploadPage(BasePage):
         # Resolve Pylance warning by checking if type is None
         if full_path is None:
             raise ValueError("Expected file input to contain a value.")
-        # full_path will contain something like 'C:\\fakepath\\{file_name.txt}', so we extract only the file name
+        # full_path will contain something like
+        # 'C:\\fakepath\\{file_name.txt}', so we extract only the
+        # file name
         return os.path.basename(full_path)
 
     def verify_uploaded_filename(self, expected_file_name: str) -> None:
@@ -67,7 +73,8 @@ class FileUploadPage(BasePage):
 
     def click_upload_button(self) -> None:
         button = self._wait_for_element(self.UPLOAD_BUTTON)
-        # Scrolls the element into view just enough to trigger visibility in case it's hidden
+        # Scrolls the element into view just enough to trigger
+        # visibility in case it's hidden
         ActionChains(self.driver).move_to_element(button).pause(0.2).click(
             button
         ).perform()

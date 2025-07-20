@@ -5,9 +5,12 @@ from main_pom_project.pages.base_page import BasePage
 
 class FormValidationPage(BasePage):
     """
-    Page Object Model for https://practice.expandtesting.com/form-validation
+    Page Object Model for
+    https://practice.expandtesting.com/form-validation
 
-    This page contains a multi-field form used to test front-end form validation.
+    This page contains a multi-field form used to test front-end form
+    validation.
+
     It includes:
     - Text input fields (name, contact number)
     - A date picker input
@@ -15,7 +18,8 @@ class FormValidationPage(BasePage):
     - A register button
     - Field-level validation messages
 
-    This class provides methods for interacting with and validating each of these elements.
+    This class provides methods for interacting with and validating
+    each of these elements.
     """
 
     URL = "https://practice.expandtesting.com/form-validation"

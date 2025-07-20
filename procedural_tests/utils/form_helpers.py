@@ -160,7 +160,11 @@ def validate_textarea_input(
     )
     textarea_elem.send_keys("\n".join(values_to_type))
     # Ensure that the textarea contains new lines
-    _assert_equal(True, "\n" in textarea_elem.get_attribute("value"), "Textarea is missing newline")  # type: ignore[attr-defined]
+    _assert_equal(
+        True,
+        "\n" in textarea_elem.get_attribute("value"),
+        "Textarea is missing newline",  # type: ignore[attr-defined]
+    )
 
     # Validate value was entered
     _assert_equal(

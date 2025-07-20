@@ -49,7 +49,8 @@ def test_valid_file_upload(driver: WebDriver) -> None:
 @pytest.mark.file_upload
 def test_upload_file_too_large(driver: WebDriver) -> None:
     """
-    Upload a file exceeding 500KB, validate that an error message appears, then dismiss the error and verify it disappears.
+    Upload a file exceeding 500KB, validate that an error message
+    appears, then dismiss the error and verify it disappears.
     """
     page = FileUploadPage(driver)
     page.open()
