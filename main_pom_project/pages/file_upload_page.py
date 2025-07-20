@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import WebDriverWait
 from main_pom_project.pages.base_page import BasePage
+from selenium.webdriver.common.action_chains import ActionChains
 
 class FileUploadPage(BasePage):
     """
@@ -50,8 +51,10 @@ class FileUploadPage(BasePage):
         actual_file_name = self.get_uploaded_filename()
         self.assert_equal(expected_file_name, actual_file_name, "Filename should populate in file input field: ")
 
-    def click_upload_button(self):
-        self._wait_for_element(self.UPLOAD_BUTTON).click()
+    def click_upload_button(self) -> None:
+        button = self._wait_for_element(self.UPLOAD_BUTTON)
+        # Scrolls the element into view just enough to trigger visibility in case it's hidden
+        ActionChains(self.driver).move_to_element(button).pause(0.2).click(button).perform()
 
     def verify_upload_success(self, expected_file_name: str) -> None:
         expected_header = "File Uploaded!"

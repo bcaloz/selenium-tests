@@ -32,9 +32,6 @@ def test_valid_file_upload(driver: WebDriver) -> None:
     # Upload file, verify filename in input field, then click Upload
     expected_file_name = os.path.basename(local_file_path)
     page.upload_file(local_file_path)
-
-    #TODO: replace this sleep. add some wait_for code to verify_uploaded filename
-    time.sleep(5.0)  # Tiny delay before checking populated value
     page.verify_uploaded_filename(expected_file_name)
     page.click_upload_button()
 
