@@ -5,10 +5,11 @@ from selenium.webdriver.remote.webelement import WebElement
 from main_pom_project.pages.base_page import BasePage
 from selenium.webdriver.common.action_chains import ActionChains
 
+
 class FileUploadPage(BasePage):
     """
     Page Object Model for https://practice.expandtesting.com/upload
-    
+
     This page contains a file upload form used to test front-end file handling validation.
     It includes:
     - A file input field with a 500KB size limit
@@ -19,14 +20,21 @@ class FileUploadPage(BasePage):
 
     This class provides methods for interacting with and validating each of these elements.
     """
+
     URL = "https://practice.expandtesting.com/upload"
-    PAGE_TITLE = (By.XPATH, "//h1[text()='File Uploader page for Automation Testing Practice']")
+    PAGE_TITLE = (
+        By.XPATH,
+        "//h1[text()='File Uploader page for Automation Testing Practice']",
+    )
     FILE_INPUT = (By.ID, "fileInput")
     UPLOAD_BUTTON = (By.ID, "fileSubmit")
     UPLOAD_SUCCESS_HEADER = (By.TAG_NAME, "h1")
     UPLOAD_SUCCESS_MSG = (By.ID, "uploaded-files")
     UPLOAD_ERROR_MSG = (By.CSS_SELECTOR, "div.alert.alert-danger")
-    UPLOAD_ERROR_DISMISS_BUTTON = (By.CSS_SELECTOR, "div.alert.alert-danger button.close")
+    UPLOAD_ERROR_DISMISS_BUTTON = (
+        By.CSS_SELECTOR,
+        "div.alert.alert-danger button.close",
+    )
 
     def open(self) -> None:
         print("[FileUploadPage] Opening page")
@@ -40,7 +48,9 @@ class FileUploadPage(BasePage):
         self._wait_for_element(self.FILE_INPUT).send_keys(file_path)
 
     def get_uploaded_filename(self) -> str:
-        full_path: Optional[str] = self._wait_for_element(self.FILE_INPUT).get_attribute("value")
+        full_path: Optional[str] = self._wait_for_element(
+            self.FILE_INPUT
+        ).get_attribute("value")
         # Resolve Pylance warning by checking if type is None
         if full_path is None:
             raise ValueError("Expected file input to contain a value.")
@@ -49,20 +59,32 @@ class FileUploadPage(BasePage):
 
     def verify_uploaded_filename(self, expected_file_name: str) -> None:
         actual_file_name = self.get_uploaded_filename()
-        self.assert_equal(expected_file_name, actual_file_name, "Filename should populate in file input field: ")
+        self.assert_equal(
+            expected_file_name,
+            actual_file_name,
+            "Filename should populate in file input field: ",
+        )
 
     def click_upload_button(self) -> None:
         button = self._wait_for_element(self.UPLOAD_BUTTON)
         # Scrolls the element into view just enough to trigger visibility in case it's hidden
-        ActionChains(self.driver).move_to_element(button).pause(0.2).click(button).perform()
+        ActionChains(self.driver).move_to_element(button).pause(0.2).click(
+            button
+        ).perform()
 
     def verify_upload_success(self, expected_file_name: str) -> None:
         expected_header = "File Uploaded!"
         actual_header = self._wait_for_element(self.UPLOAD_SUCCESS_HEADER).text
-        self.assert_equal(expected_header, actual_header, "Upload success header mismatch: ")
+        self.assert_equal(
+            expected_header, actual_header, "Upload success header mismatch: "
+        )
 
         success_msg = self._wait_for_element(self.UPLOAD_SUCCESS_MSG).text
-        self.assert_in(expected_file_name, success_msg, "Uploaded filename not found in success message: ")
+        self.assert_in(
+            expected_file_name,
+            success_msg,
+            "Uploaded filename not found in success message: ",
+        )
 
     def get_upload_error_message(self) -> str:
         return self._wait_for_element(self.UPLOAD_ERROR_MSG).text.strip()
@@ -72,7 +94,10 @@ class FileUploadPage(BasePage):
 
     def verify_upload_error_dismissed(self) -> None:
         is_hidden = self._element_is_hidden(self.UPLOAD_ERROR_MSG)
-        self.assert_equal(True, is_hidden, "Error message should no longer be visible after dismiss: ")
-    
+        self.assert_equal(
+            True, is_hidden, "Error message should no longer be visible after dismiss: "
+        )
+
+
 # too large error + dismiss error
 # selecting file + refresh page clears field

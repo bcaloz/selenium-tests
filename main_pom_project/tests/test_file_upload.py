@@ -3,6 +3,7 @@ import os
 from main_pom_project.pages.file_upload_page import FileUploadPage
 from selenium.webdriver.remote.webdriver import WebDriver
 
+
 @pytest.mark.file_upload
 def test_page_title_is_correct(driver: WebDriver) -> None:
     """
@@ -16,6 +17,7 @@ def test_page_title_is_correct(driver: WebDriver) -> None:
     expected_title = "File Uploader page for Automation Testing Practice"
     actual_title = title_elem.text.strip()
     page.assert_equal(expected_title, actual_title, "Page title mismatch: ")
+
 
 @pytest.mark.file_upload
 @pytest.mark.smoke
@@ -33,7 +35,7 @@ def test_valid_file_upload(driver: WebDriver) -> None:
     local_file_path = os.path.abspath(
         os.path.join(base_dir, "..", "test_data", "sample_upload.txt")
     )
-    
+
     # Upload file, verify filename in input field, then click Upload
     expected_file_name = os.path.basename(local_file_path)
     page.upload_file(local_file_path)
@@ -42,6 +44,7 @@ def test_valid_file_upload(driver: WebDriver) -> None:
 
     # Verify success header and confirmation message
     page.verify_upload_success(expected_file_name)
+
 
 @pytest.mark.file_upload
 def test_upload_file_too_large(driver: WebDriver) -> None:
@@ -53,7 +56,9 @@ def test_upload_file_too_large(driver: WebDriver) -> None:
 
     # Path to too-large file (e.g., upload_too_large.txt)
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.abspath(os.path.join(base_dir, "..", "test_data", "upload_too_large.txt"))
+    file_path = os.path.abspath(
+        os.path.join(base_dir, "..", "test_data", "upload_too_large.txt")
+    )
 
     page.upload_file(file_path)
     page.click_upload_button()
@@ -61,7 +66,9 @@ def test_upload_file_too_large(driver: WebDriver) -> None:
     # Validate error message is visible
     error_msg = page.get_upload_error_message()
     expected_msg = "File size exceeds maximum allowed limit of 500KB."
-    page.assert_equal(expected_msg, error_msg, "Too large file error message mismatch: ")
+    page.assert_equal(
+        expected_msg, error_msg, "Too large file error message mismatch: "
+    )
 
     # Click the dismiss (X) button
     page.dismiss_upload_error()

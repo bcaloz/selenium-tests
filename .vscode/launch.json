@@ -8,7 +8,10 @@
       "request": "launch",
       "module": "pytest",
       "cwd": "${workspaceFolder}",
-      "args": ["procedural_tests/tests/test_duckduckgo.py","-v"],
+      "args": [
+        "procedural_tests/tests/test_duckduckgo.py",
+        "-v"
+      ],
       "console": "integratedTerminal",
       "justMyCode": false
     },
@@ -18,7 +21,11 @@
       "request": "launch",
       "module": "pytest",
       "cwd": "${workspaceFolder}",
-      "args": ["procedural_tests/tests/test_demo.py","-v", "-s"],
+      "args": [
+        "procedural_tests/tests/test_demo.py",
+        "-v",
+        "-s"
+      ],
       "console": "integratedTerminal",
       "justMyCode": false
     },
@@ -28,19 +35,25 @@
       "request": "launch",
       "module": "pytest",
       "cwd": "${workspaceFolder}",
-      "args": ["procedural_tests/tests","-v"],
+      "args": [
+        "procedural_tests/tests",
+        "-v"
+      ],
       "console": "integratedTerminal",
       "justMyCode": false
     },
-
-     // --- Basic POM tests ---
+    // --- Basic POM tests ---
     {
       "name": "Debug: landing_page only",
       "type": "debugpy",
       "request": "launch",
       "module": "pytest",
       "cwd": "${workspaceFolder}",
-      "args": ["basic_pom_demo/tests/test_landing_page.py", "-v", "-s"],
+      "args": [
+        "basic_pom_demo/tests/test_landing_page.py",
+        "-v",
+        "-s"
+      ],
       "console": "integratedTerminal",
       "justMyCode": false
     },
@@ -50,11 +63,13 @@
       "request": "launch",
       "module": "pytest",
       "cwd": "${workspaceFolder}",
-      "args": ["basic_pom_demo/tests", "-v"],
+      "args": [
+        "basic_pom_demo/tests",
+        "-v"
+      ],
       "console": "integratedTerminal",
       "justMyCode": false
     },
-
     // --- Main POM project tests ---
     {
       "name": "Debug: main_pom_project form_validation_page only",
@@ -62,17 +77,25 @@
       "request": "launch",
       "module": "pytest",
       "cwd": "${workspaceFolder}",
-      "args": ["main_pom_project/tests/test_form_validation.py", "-v", "-s"],
+      "args": [
+        "main_pom_project/tests/test_form_validation.py",
+        "-v",
+        "-s"
+      ],
       "console": "integratedTerminal",
       "justMyCode": false
     },
-        {
+    {
       "name": "Debug: main_pom_project file_upload_page only",
       "type": "debugpy",
       "request": "launch",
       "module": "pytest",
       "cwd": "${workspaceFolder}",
-      "args": ["main_pom_project/tests/test_file_upload.py", "-v", "-s"],
+      "args": [
+        "main_pom_project/tests/test_file_upload.py",
+        "-v",
+        "-s"
+      ],
       "console": "integratedTerminal",
       "justMyCode": false
     },
@@ -82,7 +105,10 @@
       "request": "launch",
       "module": "pytest",
       "cwd": "${workspaceFolder}",
-      "args": ["main_pom_project/tests", "-v"],
+      "args": [
+        "main_pom_project/tests",
+        "-v"
+      ],
       "console": "integratedTerminal",
       "justMyCode": false
     },
