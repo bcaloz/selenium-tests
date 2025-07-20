@@ -1,9 +1,7 @@
 import os
 from typing import Optional
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.ui import WebDriverWait
 from main_pom_project.pages.base_page import BasePage
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -26,7 +24,9 @@ class FileUploadPage(BasePage):
     FILE_INPUT = (By.ID, "fileInput")
     UPLOAD_BUTTON = (By.ID, "fileSubmit")
     UPLOAD_SUCCESS_HEADER = (By.TAG_NAME, "h1")
-    UPLOAD_SUCCESS_MESSAGE = (By.ID, "uploaded-files")
+    UPLOAD_SUCCESS_MSG = (By.ID, "uploaded-files")
+    UPLOAD_ERROR_MSG = (By.CSS_SELECTOR, "div.alert.alert-danger")
+    UPLOAD_ERROR_DISMISS_BUTTON = (By.CSS_SELECTOR, "div.alert.alert-danger button.close")
 
     def open(self) -> None:
         print("[FileUploadPage] Opening page")
@@ -61,11 +61,18 @@ class FileUploadPage(BasePage):
         actual_header = self._wait_for_element(self.UPLOAD_SUCCESS_HEADER).text
         self.assert_equal(expected_header, actual_header, "Upload success header mismatch: ")
 
-        success_msg = self._wait_for_element(self.UPLOAD_SUCCESS_MESSAGE).text
+        success_msg = self._wait_for_element(self.UPLOAD_SUCCESS_MSG).text
         self.assert_in(expected_file_name, success_msg, "Uploaded filename not found in success message: ")
 
-    def _wait_for_element(self, locator: tuple[str, str]) -> WebElement:
-        return self.wait.until(EC.visibility_of_element_located(locator))
+    def get_upload_error_message(self) -> str:
+        return self._wait_for_element(self.UPLOAD_ERROR_MSG).text.strip()
+
+    def dismiss_upload_error(self) -> None:
+        self._wait_for_element(self.UPLOAD_ERROR_DISMISS_BUTTON).click()
+
+    def verify_upload_error_dismissed(self) -> None:
+        is_hidden = self._element_is_hidden(self.UPLOAD_ERROR_MSG)
+        self.assert_equal(True, is_hidden, "Error message should no longer be visible after dismiss: ")
     
 # too large error + dismiss error
 # selecting file + refresh page clears field

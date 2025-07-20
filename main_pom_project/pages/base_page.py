@@ -22,6 +22,13 @@ class BasePage:
 
     def _wait_for_element(self, locator: tuple[str, str]) -> WebElement:
         return self.wait.until(EC.visibility_of_element_located(locator))
+    
+    def _element_is_hidden(self, locator: tuple[str, str]) -> bool:
+        try:
+            elem = self.driver.find_element(*locator)
+            return not elem.is_displayed()
+        except Exception:
+            return True  # If not found, treat as hidden
 
     @staticmethod
     def assert_equal(expected: object, actual: object, message_prefix: str = "") -> None:
