@@ -2,6 +2,7 @@ import pytest
 import os
 from main_pom_project.pages.file_upload_page import FileUploadPage
 from selenium.webdriver.remote.webdriver import WebDriver
+from main_pom_project.utils import get_test_file_path
 
 
 @pytest.mark.file_upload
@@ -30,13 +31,11 @@ def test_valid_file_upload(driver: WebDriver) -> None:
     page = FileUploadPage(driver)
     page.open()
 
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    local_file_path = os.path.abspath(
-        os.path.join(base_dir, "..", "test_data", "sample_upload.txt")
+    local_file_path, expected_filename = get_test_file_path(
+        "sample_upload.txt", __file__
     )
 
     # Upload file and verify filename is displayed
-    expected_filename = os.path.basename(local_file_path)
     page.select_file_to_upload(local_file_path)
     page.verify_uploaded_filename(expected_filename)
     page.click_upload_button()
@@ -54,12 +53,9 @@ def test_upload_file_too_large(driver: WebDriver) -> None:
     page = FileUploadPage(driver)
     page.open()
 
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.abspath(
-        os.path.join(base_dir, "..", "test_data", "upload_too_large.txt")
-    )
+    local_file_path, _ = get_test_file_path("upload_too_large.txt", __file__)
 
-    page.select_file_to_upload(file_path)
+    page.select_file_to_upload(local_file_path)
     page.click_upload_button()
 
     # Validate error message is visible
@@ -82,14 +78,12 @@ def test_uploaded_file_resets_after_refresh(driver: WebDriver) -> None:
     page = FileUploadPage(driver)
     page.open()
 
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.abspath(
-        os.path.join(base_dir, "..", "test_data", "sample_upload.txt")
+    local_file_path, expected_filename = get_test_file_path(
+        "sample_upload.txt", __file__
     )
-    expected_filename = os.path.basename(file_path)
 
     # Select file and verify name appears in input
-    page.select_file_to_upload(file_path)
+    page.select_file_to_upload(local_file_path)
     page.verify_uploaded_filename(expected_filename)
 
     # Refresh page and verify filename input resets
