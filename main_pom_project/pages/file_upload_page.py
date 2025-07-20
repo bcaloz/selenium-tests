@@ -37,7 +37,7 @@ class FileUploadPage(BasePage):
     UPLOAD_ERROR_MSG = (By.CSS_SELECTOR, "div.alert.alert-danger")
     UPLOAD_ERROR_DISMISS_BUTTON = (
         By.CSS_SELECTOR,
-        "div.alert.alert-danger button.close",
+        "button.btn-close",
     )
 
     def open(self) -> None:
@@ -58,9 +58,8 @@ class FileUploadPage(BasePage):
         # Resolve Pylance warning by checking if type is None
         if full_path is None:
             raise ValueError("Expected file input to contain a value.")
-        # full_path will contain something like
-        # 'C:\\fakepath\\{file_name.txt}', so we extract only the
-        # file name
+        # full_path contains something like 'C:\\fakepath\\filename.txt';
+        # extract only the file name
         return os.path.basename(full_path)
 
     def verify_uploaded_filename(self, expected_file_name: str) -> None:
@@ -73,8 +72,7 @@ class FileUploadPage(BasePage):
 
     def click_upload_button(self) -> None:
         button = self._wait_for_element(self.UPLOAD_BUTTON)
-        # Scrolls the element into view just enough to trigger
-        # visibility in case it's hidden
+        # Scroll just enough to trigger visibility in case element is hidden
         ActionChains(self.driver).move_to_element(button).pause(0.2).click(
             button
         ).perform()
@@ -100,13 +98,12 @@ class FileUploadPage(BasePage):
         self._wait_for_element(self.UPLOAD_ERROR_DISMISS_BUTTON).click()
 
     def verify_upload_error_dismissed(self) -> None:
-        is_hidden = self._element_is_hidden(self.UPLOAD_ERROR_MSG)
+        self._wait_for_element_to_disappear(self.UPLOAD_ERROR_MSG)
         self.assert_equal(
             True,
-            is_hidden,
+            self._element_is_hidden(self.UPLOAD_ERROR_MSG),
             "Error message should no longer be visible after being dismissed: ",
         )
 
 
-# too large error + dismiss error
 # selecting file + refresh page clears field

@@ -5,8 +5,7 @@ from main_pom_project.pages.base_page import BasePage
 
 class FormValidationPage(BasePage):
     """
-    Page Object Model for
-    https://practice.expandtesting.com/form-validation
+    Page Object Model for https://practice.expandtesting.com/form-validation
 
     This page contains a multi-field form used to test front-end form
     validation.

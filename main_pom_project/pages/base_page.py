@@ -25,6 +25,12 @@ class BasePage:
     def _wait_for_element(self, locator: tuple[str, str]) -> WebElement:
         return self.wait.until(EC.visibility_of_element_located(locator))
 
+    def _wait_for_element_to_disappear(self, locator: tuple[str, str]) -> bool:
+        result = WebDriverWait(self.driver, 5).until(
+            EC.invisibility_of_element_located(locator)
+        )
+        return bool(result)
+
     def _element_is_hidden(self, locator: tuple[str, str]) -> bool:
         try:
             elem = self.driver.find_element(*locator)
