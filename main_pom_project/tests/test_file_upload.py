@@ -36,13 +36,13 @@ def test_valid_file_upload(driver: WebDriver) -> None:
     )
 
     # Upload file and verify filename is displayed
-    expected_file_name = os.path.basename(local_file_path)
-    page.upload_file(local_file_path)
-    page.verify_uploaded_filename(expected_file_name)
+    expected_filename = os.path.basename(local_file_path)
+    page.select_file_to_upload(local_file_path)
+    page.verify_uploaded_filename(expected_filename)
     page.click_upload_button()
 
     # Verify success header and confirmation message
-    page.verify_upload_success(expected_file_name)
+    page.verify_upload_success(expected_filename)
 
 
 @pytest.mark.file_upload
@@ -59,7 +59,7 @@ def test_upload_file_too_large(driver: WebDriver) -> None:
         os.path.join(base_dir, "..", "test_data", "upload_too_large.txt")
     )
 
-    page.upload_file(file_path)
+    page.select_file_to_upload(file_path)
     page.click_upload_button()
 
     # Validate error message is visible
@@ -73,4 +73,25 @@ def test_upload_file_too_large(driver: WebDriver) -> None:
     page.verify_upload_error_dismissed()
 
 
-# selecting file + refresh page clears field
+@pytest.mark.file_upload
+def test_uploaded_file_resets_after_refresh(driver: WebDriver) -> None:
+    """
+    Upload a valid file, confirm filename appears, refresh page,
+    and verify the input field is reset to empty/default state.
+    """
+    page = FileUploadPage(driver)
+    page.open()
+
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.abspath(
+        os.path.join(base_dir, "..", "test_data", "sample_upload.txt")
+    )
+    expected_filename = os.path.basename(file_path)
+
+    # Select file and verify name appears in input
+    page.select_file_to_upload(file_path)
+    page.verify_uploaded_filename(expected_filename)
+
+    # Refresh page and verify filename input resets
+    page.refresh()
+    page.verify_uploaded_filename("")
