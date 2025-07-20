@@ -1,5 +1,4 @@
 import pytest
-import os
 from main_pom_project.pages.file_upload_page import FileUploadPage
 from selenium.webdriver.remote.webdriver import WebDriver
 from main_pom_project.utils import get_test_file_path
