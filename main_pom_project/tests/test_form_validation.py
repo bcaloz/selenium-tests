@@ -23,9 +23,8 @@ def test_page_title_is_correct(driver: WebDriver) -> None:
 @pytest.mark.smoke
 def test_valid_form_submission_redirects(driver: WebDriver) -> None:
     """
-    Happy path - complete form, click Register, and validate user is
-    redirected to form confirmation page with positive acknowledgment
-    message.
+    Happy path – complete form, click Register, and verify redirect
+    to confirmation page with positive acknowledgment message.
     """
     page = FormValidationPage(driver)
     page.open()
@@ -40,11 +39,14 @@ def test_valid_form_submission_redirects(driver: WebDriver) -> None:
     page.assert_equal(expected_url, driver.current_url, "URL mismatch: ")
 
     # Assert confirmation message is correct
-    expected_msg = "Thank you for validating your ticket"
-    actual_msg = page.get_confirmation_message()
-    # Use startswith() because web ads are shown on live page which can
-    # cause some random additional text to appear at the end
-    page.assert_startswith(expected_msg, actual_msg, "Confirmation msg mismatch: ")
+    expected_confirmation_msg = "Thank you for validating your ticket"
+    actual_confirmation_msg = page.get_confirmation_message()
+    # Use startswith() due to web ads sometimes appending text at the end
+    page.assert_startswith(
+        expected_confirmation_msg,
+        actual_confirmation_msg,
+        "Confirmation msg mismatch: ",
+    )
 
 
 @pytest.mark.form_validation
@@ -59,7 +61,7 @@ def test_blank_form_submission_shows_errors(driver: WebDriver) -> None:
     expected_name_error_msg = "Please enter your Contact name."
     expected_number_error_msg = "Please provide your Contact number."
     expected_date_error_msg = "Please provide valid Date."
-    expected_payment_method_error_msg = "Please select the Paymeny Method."
+    expected_payment_method_error_msg = "Please select the Payment Method."
 
     # Page starts with pre-filled text in Contact Name field. Clear to
     # trigger error msg.
@@ -105,7 +107,7 @@ def test_field_validation_feedback(driver: WebDriver) -> None:
     page = FormValidationPage(driver)
     page.open()
 
-    # Page starts with pre-filled texct in Contact Name field. Clear to
+    # Page starts with pre-filled text in Contact Name field. Clear to
     # trigger error msg.
     page.clear_name_field()
     page.click_register_button()

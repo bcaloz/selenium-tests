@@ -23,20 +23,19 @@ def test_page_title_is_correct(driver: WebDriver) -> None:
 @pytest.mark.smoke
 def test_valid_file_upload(driver: WebDriver) -> None:
     """
-    Select a valid file (less than 500 KB), ensure the file name
-    populates in the input field, and confirm success messsages
-    display after upload.
+    Happy path – upload a valid file (less than 500KB), ensure the
+    filename appears in the input field, and confirm success messages
+    are displayed.
     """
     page = FileUploadPage(driver)
     page.open()
 
-    # Resolve absolute path to sample_upload.txt in the test_data directory
     base_dir = os.path.dirname(os.path.abspath(__file__))
     local_file_path = os.path.abspath(
         os.path.join(base_dir, "..", "test_data", "sample_upload.txt")
     )
 
-    # Upload file, verify filename in input field, then click Upload
+    # Upload file and verify filename is displayed
     expected_file_name = os.path.basename(local_file_path)
     page.upload_file(local_file_path)
     page.verify_uploaded_filename(expected_file_name)
@@ -55,7 +54,6 @@ def test_upload_file_too_large(driver: WebDriver) -> None:
     page = FileUploadPage(driver)
     page.open()
 
-    # Path to too-large file (e.g., upload_too_large.txt)
     base_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.abspath(
         os.path.join(base_dir, "..", "test_data", "upload_too_large.txt")
@@ -65,17 +63,14 @@ def test_upload_file_too_large(driver: WebDriver) -> None:
     page.click_upload_button()
 
     # Validate error message is visible
-    error_msg = page.get_upload_error_message()
-    expected_msg = "File size exceeds maximum allowed limit of 500KB."
+    expected_error_msg = "File too large, please select a file less than 500KB"
+    actual_error_msg = page.get_upload_error_message()
     page.assert_equal(
-        expected_msg, error_msg, "Too large file error message mismatch: "
+        expected_error_msg, actual_error_msg, "Too large file error message mismatch: "
     )
 
-    # Click the dismiss (X) button
     page.dismiss_upload_error()
-
-    # Verify error is dismissed
-    page.assert_upload_error_dismissed()
+    page.verify_upload_error_dismissed()
 
 
 # selecting file + refresh page clears field

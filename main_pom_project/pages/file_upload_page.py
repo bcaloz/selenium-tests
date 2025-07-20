@@ -102,7 +102,9 @@ class FileUploadPage(BasePage):
     def verify_upload_error_dismissed(self) -> None:
         is_hidden = self._element_is_hidden(self.UPLOAD_ERROR_MSG)
         self.assert_equal(
-            True, is_hidden, "Error message should no longer be visible after dismiss: "
+            True,
+            is_hidden,
+            "Error message should no longer be visible after being dismissed: ",
         )
 
 
