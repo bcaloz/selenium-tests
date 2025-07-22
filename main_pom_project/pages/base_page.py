@@ -2,6 +2,8 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class BasePage:
@@ -21,6 +23,9 @@ class BasePage:
     def __init__(self, driver: WebDriver, timeout: int = TIMEOUT) -> None:
         self.driver = driver
         self.wait = WebDriverWait(driver, timeout)
+
+    def scroll_to_bottom(self) -> None:
+        ActionChains(self.driver).send_keys(Keys.END).perform()
 
     def _wait_for_element(self, locator: tuple[str, str]) -> WebElement:
         return self.wait.until(EC.visibility_of_element_located(locator))
