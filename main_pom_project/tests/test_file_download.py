@@ -24,7 +24,7 @@ def test_page_title_is_correct(driver: WebDriver) -> None:
 def test_file_downloads_successfully(driver: WebDriver) -> None:
     """
     Click download link for 'some-file.txt' and verify the file
-    was successfully downloaded to the test_data folder.
+    was successfully downloaded.
     """
     page = FileDownloadPage(driver)
     page.open()
