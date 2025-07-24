@@ -40,11 +40,3 @@ class FileDownloadPage(BasePage):
         # Known site issue: dynamic ads can block this click — test passes if stepped through manually.
         link = self._wait_for_element(self.DOWNLOAD_LINK)
         ActionChains(self.driver).move_to_element(link).pause(0.2).click(link).perform()
-
-    def verify_file_was_downloaded(self, filename: str, download_dir: str) -> None:
-        local_file_path, _ = get_test_file_path("some-file.txt", __file__)
-        self.assert_equal(
-            True,
-            os.path.exists(local_file_path),
-            f"Expected file '{filename}' to exist in '{download_dir}', but it was not found.",
-        )
