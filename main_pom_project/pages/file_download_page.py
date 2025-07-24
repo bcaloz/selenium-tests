@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from main_pom_project.pages.base_page import BasePage
+from selenium.webdriver.common.action_chains import ActionChains
 import os
 from main_pom_project.utils import get_test_file_path
 
@@ -36,8 +37,9 @@ class FileDownloadPage(BasePage):
         return self._wait_for_element(self.PAGE_TITLE)
 
     def click_download_link(self) -> None:
-        self.scroll_to_bottom()
-        self._wait_for_element(self.DOWNLOAD_LINK).click()
+        # Known site issue: dynamic ads can block this click — test passes if stepped through manually.
+        link = self._wait_for_element(self.DOWNLOAD_LINK)
+        ActionChains(self.driver).move_to_element(link).pause(0.2).click(link).perform()
 
     def verify_file_was_downloaded(self, filename: str, download_dir: str) -> None:
         local_file_path, _ = get_test_file_path("some-file.txt", __file__)

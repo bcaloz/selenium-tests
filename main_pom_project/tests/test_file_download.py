@@ -1,9 +1,7 @@
-import os
-import time
 import pytest
 from selenium.webdriver.remote.webdriver import WebDriver
 from main_pom_project.pages.file_download_page import FileDownloadPage
-from main_pom_project.utils import get_test_file_path
+from conftest import wait_for_file
 
 
 @pytest.mark.file_download
@@ -23,7 +21,7 @@ def test_page_title_is_correct(driver: WebDriver) -> None:
 
 @pytest.mark.file_download
 @pytest.mark.smoke
-def test_file_download(driver: WebDriver) -> None:
+def test_file_downloads_successfully(driver: WebDriver) -> None:
     """
     Click download link for 'some-file.txt' and verify the file
     was successfully downloaded to the test_data folder.
@@ -34,12 +32,6 @@ def test_file_download(driver: WebDriver) -> None:
     # Click link to trigger download
     page.click_download_link()
 
-    # Build local path and wait briefly for download
-    local_file_path, _ = get_test_file_path("some-file.txt", __file__)
-    time.sleep(1.5)  # adjust if download is slow
-
-    # Validate file was downloaded
-    file_exists = os.path.exists(local_file_path)
-    page.assert_equal(
-        True, file_exists, "Downloaded file not found in test_data folder: "
-    )
+    # This is dynamically added in the fixture
+    download_file_path = driver.download_dir / "some-file.txt"  # type: ignore[attr-defined]
+    assert wait_for_file(download_file_path), f"File not found: {download_file_path}"
