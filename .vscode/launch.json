@@ -114,6 +114,20 @@
       "justMyCode": false
     },
     {
+      "name": "Debug: main_pom_project dynamic_table_page only",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "main_pom_project/tests/test_dynamic_table.py",
+        "-v",
+        "-s"
+      ],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
       "name": "Debug: all main_pom_project tests",
       "type": "debugpy",
       "request": "launch",

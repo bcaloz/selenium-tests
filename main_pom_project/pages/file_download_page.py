@@ -2,8 +2,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from main_pom_project.pages.base_page import BasePage
 from selenium.webdriver.common.action_chains import ActionChains
-import os
-from main_pom_project.utils import get_test_file_path
 
 
 class FileDownloadPage(BasePage):
